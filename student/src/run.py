@@ -5,8 +5,9 @@ import dataset
 import models
 import trainer
 import utils
-
 import torch
+import tensorboard
+
 from tqdm import tqdm
 from torch.utils.tensorboard import SummaryWriter
 
@@ -62,12 +63,12 @@ mconf = models.GPTConfig(
 # define models.
 # note: models should moved to device defined on lines 30-34.
 
-model = None
+model:models.GPT = None
+
 if args.variant == 'vanilla':
-    # TODO: [part c] Make some model here
-    ### YOUR CODE HERE ###
-    pass
-    ### END YOUR CODE ###
+
+    model = models.GPT(mconf)
+
 elif args.variant == 'rope':
     # TODO: [part g] Make some other model here
     # set mconf.rope parameter
@@ -139,6 +140,23 @@ elif args.function == 'finetune':
     #         writer=writer
     #     You can use the args.reading_params_path flag to switch between the
     #     number of epochs for each case.
+
+    text = open(args.finetune_corpus_path, encoding='utf-8').read()
+    finetune_dataset = dataset.NameDataset(pretrain_dataset,text)
+
+    print("Llegue aca")
+
+    tconf=trainer.TrainerConfig(max_epochs=75,
+                          batch_size=256,
+                          learning_rate=args.finetune_lr,
+                          lr_decay=True,
+                          warmup_tokens=512*20,
+                          final_tokens=200*len(finetune_dataset)*block_size,
+                          num_workers=0,
+                          writer=writer)
+
+    entreno = trainer.Trainer(model, finetune_dataset, None, tconf)
+    entreno.train()
 
     ### YOUR CODE HERE ###
     pass
