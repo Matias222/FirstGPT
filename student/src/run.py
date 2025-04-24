@@ -34,6 +34,8 @@ if torch.cuda.is_available():
 elif torch.backends.mps.is_available() and args.variant == 'vanilla':
     device = 'mps'
 
+print("Dispositivo",device)
+
 # TensorBoard training log
 writer = SummaryWriter(log_dir='expt/%s/%s_%s_pt_lr_%f_ft_lr_%f' % (
     args.function,
@@ -152,7 +154,7 @@ elif args.function == 'finetune':
                           lr_decay=True,
                           warmup_tokens=512*20,
                           final_tokens=200*len(finetune_dataset)*block_size,
-                          num_workers=0,
+                          num_workers=4,
                           writer=writer)
 
     entreno = trainer.Trainer(model, finetune_dataset, None, tconf)
