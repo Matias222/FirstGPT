@@ -155,10 +155,12 @@ elif args.function == 'finetune':
                           warmup_tokens=512*20,
                           final_tokens=200*len(finetune_dataset)*block_size,
                           num_workers=4,
-                          writer=writer)
+                          writer=writer,
+                          ckpt_path=args.writing_params_path)
 
     entreno = trainer.Trainer(model, finetune_dataset, None, tconf)
     entreno.train()
+    entreno.save_checkpoint()
 
     ### YOUR CODE HERE ###
     pass
