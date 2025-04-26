@@ -1,13 +1,20 @@
-import torch
+import random
 
-print(torch.cuda.is_available())  # True if a CUDA-compatible GPU is available
+dix=[1,2,3,4,5,6,7,8]
 
-print(torch.cuda.current_device())
+print(dix[7:])
 
-device = 'cpu'
-if torch.cuda.is_available():
-    device = torch.cuda.current_device()
+for i in range(10):
 
-print(torch.cuda.get_device_name(0))     # GPU name
+    inicio_masked=random.randint(1,len(dix)-2)
+    fin_masked=inicio_masked+max(1,round(random.gauss(int(len(dix)/4),1)))
 
-print(device)
+    if(inicio_masked==len(dix)-2): fin_masked=len(dix)-1
+
+    prefijo=dix[0:inicio_masked]
+    masked_content=dix[inicio_masked:fin_masked]
+    sufijo=dix[fin_masked:]
+
+    #print(dix[inicio_masked:fin_masked])
+    print(prefijo,masked_content,sufijo)
+#
