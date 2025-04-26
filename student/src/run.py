@@ -104,6 +104,20 @@ if args.function == 'pretrain':
     # num_workers=4
     # writer=writer
 
+    tconf=trainer.TrainerConfig(max_epochs=650,
+                          batch_size=128,
+                          learning_rate=args.pretrain_lr,
+                          lr_decay=True,
+                          warmup_tokens=512*20,
+                          final_tokens=650*len(pretrain_dataset)*block_size,
+                          num_workers=4,
+                          writer=writer,
+                          ckpt_path=args.writing_params_path)
+
+    entreno = trainer.Trainer(model, pretrain_dataset, None, tconf)
+    entreno.train()
+    entreno.save_checkpoint()
+
     ### YOUR CODE HERE ###
     pass
     ### END YOUR CODE ###
