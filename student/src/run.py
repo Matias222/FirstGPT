@@ -157,12 +157,12 @@ elif args.function == 'finetune':
     #     You can use the args.reading_params_path flag to switch between the
     #     number of epochs for each case.
 
+    if(args.reading_params_path!=None): model.load_state_dict(torch.load(args.reading_params_path))
+
     text = open(args.finetune_corpus_path, encoding='utf-8').read()
     finetune_dataset = dataset.NameDataset(pretrain_dataset,text)
 
-    print("Llegue aca")
-
-    tconf=trainer.TrainerConfig(max_epochs=75,
+    tconf=trainer.TrainerConfig(max_epochs=10,
                           batch_size=256,
                           learning_rate=args.finetune_lr,
                           lr_decay=True,
