@@ -74,9 +74,7 @@ if args.variant == 'vanilla':
 elif args.variant == 'rope':
     # TODO: [part g] Make some other model here
     # set mconf.rope parameter
-    ### YOUR CODE HERE ###
-    pass
-    ### END YOUR CODE ###
+    mconf.rope=True
 else:
     raise ValueError("Unknown model variant")
 
@@ -118,9 +116,6 @@ if args.function == 'pretrain':
     entreno.train()
     entreno.save_checkpoint()
 
-    ### YOUR CODE HERE ###
-    pass
-    ### END YOUR CODE ###
 elif args.function == 'finetune':
     assert args.writing_params_path is not None
     assert args.finetune_corpus_path is not None
@@ -176,9 +171,6 @@ elif args.function == 'finetune':
     entreno.train()
     entreno.save_checkpoint()
 
-    ### YOUR CODE HERE ###
-    pass
-    ### END YOUR CODE ###
 elif args.function == 'evaluate':
     assert args.outputs_path is not None
     assert args.reading_params_path is not None
